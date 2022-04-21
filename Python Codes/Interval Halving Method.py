@@ -1,39 +1,42 @@
 import numpy as np
 
-def fu(x):
-    if(x==0):
-        x=np.divide(1,np.power(10,12))
-    f=float((100-x)**2)
-    return f
-
-a=float(input("Enter a: "))
-b=float(input("Enter b: "))
-e=float(input("Enter the Termination Factor: "))
-L0=b-a
-L=L0
-i=0
-while(np.abs(L)>e):
-    xm=np.divide(np.add(a,b),2)
-    fxm=fu(xm)
-    x1=np.add(a,np.divide(L,4))
-    x2=np.subtract(b,np.divide(L,4))
-    fx1=fu(x1)
-    fx2=fu(x2)
+def function(x):
+    if(x == 0):
+        x = np.divide(1,np.power(10,12))
     
-    if(fx1<fxm):
-        b=xm
-        xm=x1
-        L=b-a
-    elif(fx2<fxm):
-        a=xm
-        xm=x2
-        L=b-a
+    expression = float((100-x)**2)
+    
+    return expression
+
+a, b, e = (float(input("Enter a: ")),
+           float(input("Enter b: ")),
+           float(input("Enter the Termination Factor: ")))
+
+L_0 = (b - a); L = L_0
+
+i = 0
+
+while(np.abs(L) > e):
+    
+    xm = np.divide(np.add(a,b),2); fxm = function(xm)
+    
+    x1 = np.add(a,np.divide(L,4)); x2 = np.subtract(b,np.divide(L,4))
+    
+    fx1 = function(x1); fx2 = function(x2)
+    
+    if(fx1 < fxm):
+        b = xm; xm = x1; L = (b - a)
+    
+    elif(fx2 < fxm):
+        a = xm; xm = x2; L = (b - a)
+    
     else:
-        a=x1
-        b=x2
-        L=b-a
-        print("\nx1,x2:",x1,x2)
-        print("fx1,fx2:",fx1,fx2)
-    print("Iteration ",i+1,": (a:",a,",b:",b,") L:",L)
-    i+=1
-print("No.of Iterations performed:",i)
+        a = x1; b = x2; L = (b - a)
+        print(f"\nx1,x2: ({x1}, {x2})")
+        print(f"fx1,fx2: ({fx1}, {fx2})")
+    
+    print(f"\nIteration {i+1}: (a, b): ({a}, {b}); L: {L}")
+    
+    i += 1
+    
+print(f"\nNo.of Iterations performed: {i}")

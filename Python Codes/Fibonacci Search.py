@@ -1,69 +1,51 @@
 import numpy as np
-
-def F(n): 
-    if n<0: 
-        print("Incorrect input") 
-    # First Fibonacci number is 0 
-    elif n==1: 
-        return 1
-    # Second Fibonacci number is 1 
-    elif n==2: 
-        return 2
-    else: 
-        return F(n-1)+F(n-2)
+ 
+def fibonacci_sequence(n):
+    if n < 0:
+        print('Negative Value Encountered')
+        pass
     
+    if n in {0,1}:
+        return n
     
+    return (fibonacci_sequence(n - 1) + fibonacci_sequence(n - 2))    
     
-def fu(x):
-    if(x==0):
-        x=np.divide(1,np.power(10,12))
-    f=float(x**2 + 54/x)
-    return f
-
-
-a=float(input("Enter a: "))
-b=float(input("Enter b: "))
-e=float(input("Enter the Termination Factor: "))
-n=int(input("Enter desired number of function evaluations: "))
-print("\n")
-
-
-L=b-a
-
-i=0
-k=2
-
-
-while(k!=n+1):
+def function(x):
+    if(x == 0):
+        x = np.divide(1,np.power(10,12))
     
-    Lk=np.multiply(np.divide(F(n-k+1),F(n+1)),L)
-    x1 = a + Lk
-    x2 = b - Lk
-    print()
-    fx1=fu(x1)
-    fx2=fu(x2)
+    expression = float(x**2 + 54/x)
+    return expression
+
+
+a, b, e, n = (float(input("Enter a: ")),
+              float(input("Enter b: ")),
+              float(input("Enter the Termination Factor: ")),
+              int(input("Enter desired number of function evaluations: ")))
+
+L = (b - a)
+
+i, k = 0, 2
+
+
+while(k != (n + 1)):
     
-    if(fx1<fx2):
-        b=x2
-        
-        Lk=b-a
+    L_k = np.multiply(np.divide(fibonacci_sequence(n - k + 1), fibonacci_sequence(n + 1)), L)
+    x_1, x_2 = a + L_k, b - L_k
+    
+    if(function(x_1) < function(x_2)):
+        b = x_2; L_k = b - a
    
-    elif(fx2<fx1):
-        a=x1
-        
-        Lk=b-a
+    elif(function(x_2) < function(x_1)):
+        a = x_1; L_k = b - a
     
     else:
-        a=x1
-        b=x2
-        Lk=b-a
+        a, b = x_1,x_2 
+        L_k = b - a
     
-    print("Iteration ",i+1,":","\nF(n-k+1):",F(n-k+1)," F(n+1):",F(n+1),"L:",L,"Lk:",Lk,"\n(x1,x2):(",x1,",",x2,")","\n(a,b):(",a,",",b,") ")
+    print(f"\nIteration {i + 1}:\nF(n - k + 1): {fibonacci_sequence(n - k + 1)} F(n + 1):{fibonacci_sequence(n + 1)} L:{L} Lk:{L_k}\n(x1, x2):({x_1}, {x_2})\n(a, b): ({a}, {b})")
   
+    i += 1; k += 1
     
-    i+=1
-    k+=1
-    
-    
-print("\nNo.of Iterations performed:",i)
-print("Final interval lies at (",a,",",b,") at the end of", i," iterations.")
+print(f"\nNo.of Iterations performed: {i}")
+print(f"\nFinal interval lies at ({a}, {b}) at the end of {i} iterations.")

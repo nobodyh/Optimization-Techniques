@@ -1,55 +1,56 @@
 import numpy as np
 
-def fu(x):
-    if(x==0):
-        x=np.divide(1,np.power(10,12))
-    f=float(np.exp(-x)-np.cos(x))
-    return f
-
-def fuw(w,a,b):
-    x=float(a + w*(b-a))
-    return fu(x)
-
-a=float(input("Enter a: "))
-b=float(input("Enter b: "))
-e=float(input("Enter the Termination Factor: "))
-print("\n")
-
-
-L0=b-a
-
-i=0
-aw=0
-bw=1
-L=bw-aw
-while(np.abs(L)>e):
+def function(x):
+    if(x == 0):
+        x = np.divide(1,np.power(10,12))
     
-    x1=float(aw+(0.618)*L)
-    x2=float(bw-(0.618)*L)
-    x1=np.around(x1,3)
-    x2=np.around(x2,3)
-    fx1=fuw(x1,a,b)
-    fx2=fuw(x2,a,b)
-    print("Iteration",i,": (aw,bw): (",aw,",",bw,") L:",L)
-    print("w1: ",x1," w2: ",x2)
-    print("f(w1): ",np.around(fx1,4)," f(w2): ",np.around(fx2,4))
+    expression = float(np.exp(-x)-np.cos(x))
     
-    if(fx1>fx2):
-        aw=aw
-        bw=x1
-        L=bw-aw
-    elif(fx1<fx2):
+    return expression
 
-        aw=x2
-        L=bw-aw
+def fuw(w, a, b):
+    return function(float(a + w * (b - a)))
+
+a, b, e = (float(input("Enter a: ")),
+           float(input("Enter b: ")),
+           float(input("Enter the Termination Factor: ")))
+
+L_0 = (b - a)
+
+i = 0
+aw = 0; bw = 1
+
+L = (bw - aw)
+
+while(np.abs(L) > e):
+    
+    x_1 = float(aw + (0.618)*L); x_2 = float(bw - (0.618)*L) # Phi/Golden Ratio = ((1 + 5**(0.5)) / 2)
+    
+    fx1 = fuw(x_1, a, b); fx2 = fuw(x_2, a, b)
+
+    print(f"Iteration {i}: (aw,bw): ({aw}, {bw}) L: {L}")
+
+    print(f"w1: {x_1}; w2: {x_2}")
+
+    print(f"f(w1): {np.around(fx1, 4)}; f(w2): {np.around(fx2, 4)}")
+    
+    if(fx1 > fx2):
+        aw = aw
+        bw = x_1
+        L = (bw - aw)
+
+    elif(fx1 < fx2):
+        aw = x_2
+        L = (bw - aw)
+    
     else:
-        aw=x1
-        bw=x2
-        L=bw-aw
-    print("Therefore (aw,bw): (",aw,",",bw,")")
-   
+        aw = x_1
+        bw = x_2
+        L = (bw - aw)
     
-    print("\n")
-    i+=1
-print("No.of Iterations performed:",i)
-print("Minimum lies at (",(b-a)*aw,",",(b-a)*bw,")")
+    print(f"\nTherefore (aw, bw): ({aw}, {bw})")
+   
+    i += 1
+
+print(f"\nNo.of Iterations performed: {i}")
+print(f"\nMinimum lies at ({(b - a) * aw}, {(b - a) * bw})")
